@@ -7,6 +7,7 @@ export interface ProductType {
   category: string;
   subCategory: string;
   images: string[];
+  sizes: string[]
 }
 
 export interface Category {

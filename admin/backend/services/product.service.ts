@@ -35,6 +35,9 @@ export const createProduct = async (productInput: ICreateProductInput) => {
 
     return await newProduct.save();
 };
+export const getProductById = async (id: string) => {
+    return await Product.findById(id)
+}
 
 export const getAllProducts = async () => {
     return await Product.find({})

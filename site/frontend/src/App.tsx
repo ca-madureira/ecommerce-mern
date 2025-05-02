@@ -12,12 +12,10 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 import './App.css'
 
-
 export const backend_url = import.meta.env.VITE_BACKEND_URL
 
 function App() {
   const [token, setToken] = useState<string>(localStorage.getItem("token") ?? "");
-
 
   useEffect(() => {
     localStorage.setItem("token", token)
@@ -37,11 +35,11 @@ function App() {
               <Route path="/login" element={<Login setToken={setToken} />} />
               <Route path="/register" element={<Register />} />
               <Route path="/collection" element={<Collection />} />
+              {/* Garanta que esta rota corresponda exatamente ao que você espera no ProductDetail */}
               <Route path="/product/:productId" element={<ProductDetail />} />
               <Route path="/testimonials" element={<Testimonials />} />
             </Routes>
           </Provider>
-
         </>
       )}
     </main>

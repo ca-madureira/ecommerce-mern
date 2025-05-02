@@ -1,5 +1,7 @@
 import { Request, Response } from "express"
-import { createProduct, deleteProductById, getAllProducts } from "../services/product.service"
+import { createProduct, deleteProductById, getAllProducts, getProductById } from "../services/product.service"
+import { Product } from "../models/product.model";
+import mongoose from 'mongoose';
 
 
 export const createProductHandler = async (req: Request, res: Response): Promise<void> => {
@@ -76,5 +78,15 @@ export const deleteProductByIdHandler = async (req: Request, res: Response) => {
 
     } catch (err) {
         res.status(500).json({ error: "Erro ao excluir produto" })
+    }
+}
+
+export const getProductByIdHandler = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const product = await getProductById(id)
+        res.status(200).json(product)
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar produtos" })
     }
 }
