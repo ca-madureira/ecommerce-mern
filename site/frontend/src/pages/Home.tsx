@@ -19,14 +19,14 @@ export const Home = () => {
 
     const getAllCategories = () => {
         axios
-            .get("http://localhost:3000/api/categories/")
+            .get("http://localhost:4000/api/categories/")
             .then((response) => setCategories(response.data))
             .catch((error) => console.error("Erro ao buscar categorias:", error));
     };
 
     const getAllProducts = () => {
         axios
-            .get("http://localhost:3000/api/products/")
+            .get("http://localhost:4000/api/products/")
             .then((response) => setProducts(response.data))
             .catch((error) => console.error("Erro ao buscar produtos:", error));
     };
@@ -85,7 +85,7 @@ export const Home = () => {
     });
 
     return (
-        <section className="flex flex-col items-center justify-center">
+        <section className="flex flex-col items-center justify-center bg-zinc-50">
             <section className="w-full h-16 flex">
                 <section className="bg-teal-100 w-full flex flex-col gap-4 pl-2">
                     <h1 className="text-teal-700 font-bold text-sm">Categorias</h1>
@@ -145,13 +145,13 @@ export const Home = () => {
             </div>
 
 
-            <section className="flex flex-wrap justify-center gap-12 w-[95%] mt-4">
+            <section className="flex flex-wrap justify-center space-y-6 gap-4">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <Product key={product._id} product={product} />
                     ))
                 ) : (
-                    <div className="flex flex-col items-center py-12 text-gray-500">
+                    <div className="">
                         <p className="text-xl">Nenhum produto encontrado</p>
                         <p className="text-sm mt-2">
                             Tente ajustar seus filtros ou termos de busca

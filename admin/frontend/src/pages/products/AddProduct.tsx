@@ -45,7 +45,7 @@ export const AddProduct = () => {
         if (image4) formData.append('image4', image4);
 
         try {
-            await axios.post('http://localhost:3000/api/products/create', formData);
+            await axios.post('http://localhost:4000/api/products/create', formData);
             alert('Produto criado com sucesso!');
             setImage1(null);
             setImage2(null);
@@ -79,7 +79,7 @@ export const AddProduct = () => {
     useEffect(() => {
         const getCategories = async () => {
             try {
-                const res = await axios.get('http://localhost:3000/api/categories/');
+                const res = await axios.get('http://localhost:4000/api/categories/');
                 setCategories(res.data);
             } catch (err) {
                 console.error('Erro ao buscar categorias:', err);

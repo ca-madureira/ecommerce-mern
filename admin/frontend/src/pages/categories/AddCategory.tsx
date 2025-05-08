@@ -38,7 +38,7 @@ export const AddCategory: React.FC = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:3000/api/categories/create', formData);
+            const response = await axios.post('http://localhost:4000/api/categories/create', formData);
             console.log('Categoria criada com sucesso:', response.data);
             alert('Categoria criada com sucesso!');
             setCategory('');

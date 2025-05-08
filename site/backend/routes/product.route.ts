@@ -1,6 +1,6 @@
 import express from 'express'
 import upload from '../middleware/multer'
-import { createProductHandler, getAllProductsHandler, deleteProductByIdHandler, getProductByIdHandler } from '../controllers/product.controller'
+import { createProductHandler, getAllProductsHandler, deleteProductByIdHandler, getProductByIdHandler, loadProducts } from '../controllers/product.controller'
 
 export const productRouter = express.Router()
 
@@ -8,3 +8,4 @@ productRouter.post("/create", upload.fields([{ name: "image1", maxCount: 1 }, { 
 productRouter.get("/:id", getProductByIdHandler);
 productRouter.get("/", getAllProductsHandler)
 productRouter.delete("/:id", deleteProductByIdHandler)
+productRouter.get("/products", loadProducts);

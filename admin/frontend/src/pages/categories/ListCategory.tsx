@@ -10,7 +10,7 @@ export const ListCategory = () => {
     useEffect(() => {
         const getAllCategories = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/categories/");
+                const response = await axios.get("http://localhost:4000/api/categories/");
                 setCategories(response.data);
             } catch (error) {
                 console.error("Erro ao buscar categorias:", error);

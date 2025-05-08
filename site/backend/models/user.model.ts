@@ -1,10 +1,18 @@
-import mongoose, { Document, Model } from 'mongoose'
+import mongoose, { Document, Model, Types } from 'mongoose'
 
-interface IUser extends Document {
-    name: string;
-    email: string;
-    password: string;
-    cart: object
+// Interface para um item do carrinho
+export interface CartItem {
+    productId: string;
+    quantity: number;
+    size?: string;
+}
+
+export interface IUser extends Document {
+    _id: Types.ObjectId
+    name: string
+    email: string
+    password: string
+    cart: CartItem[]  // Array de itens do carrinho
 }
 
 export const userSchema = new mongoose.Schema<IUser>({
@@ -21,11 +29,10 @@ export const userSchema = new mongoose.Schema<IUser>({
     password: {
         type: String,
         required: true,
-
     },
     cart: {
-        type: Object,
-        default: {}
+        type: [Object],  // Array de objetos
+        default: []      // Valor padrão como array vazio
     }
 }, {
     minimize: false,

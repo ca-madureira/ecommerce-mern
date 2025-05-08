@@ -11,6 +11,7 @@ import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import './App.css'
+import { CartPage } from './pages/CartPage'
 
 export const backend_url = import.meta.env.VITE_BACKEND_URL
 
@@ -37,7 +38,7 @@ function App() {
               <Route path="/collection" element={<Collection />} />
               {/* Garanta que esta rota corresponda exatamente ao que você espera no ProductDetail */}
               <Route path="/product/:productId" element={<ProductDetail />} />
-              <Route path="/testimonials" element={<Testimonials />} />
+              <Route path="/cart" element={<CartPage />} />
             </Routes>
           </Provider>
         </>

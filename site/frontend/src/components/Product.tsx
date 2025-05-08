@@ -21,17 +21,17 @@ export const Product = ({ product }: ProductProps) => {
 
     return (
         <Link to={`/product/${product._id}`}>
-            <article className="flex flex-col justify-between border border-gray-200 rounded-xl shadow-sm w-34 h-[250px] p-2 hover:shadow-md transition-shadow duration-300">
+            <article className="flex flex-col justify-between bg-white  hover:border-teal-500 hover:border rounded-xl shadow-sm w-48 p-2 hover:shadow-md transition-shadow duration-300">
                 <img
                     src={currentImage}
                     alt={product.name}
-                    className="w-34 h-42 rounded-t-xl cursor-pointer"
+                    className="h-48 rounded-t-xl cursor-pointer"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                 />
                 <div className="flex flex-col justify-between flex-1 mt-2">
-                    <h2 className="text-xs min-h-[2.5rem]">{product.name}</h2>
-                    <span className="text-xs font-bold text-teal-900">
+                    <h2 className="text-sm text-gray-800 font-medium min-h-[2.5rem]">{product.name}</h2>
+                    <span className="text-sm font-bold text-teal-900">
                         R$ {product.price.toFixed(2).replace(".", ",")}
                     </span>
                 </div>
