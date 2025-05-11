@@ -43,7 +43,7 @@ Este é um projeto de e-commerce de roupas desenvolvido com foco em performance,
 ### Pré-requisitos
 - Node.js
 - MongoDB
-- Stripe API Key
+
 
 ### Instalação
 
