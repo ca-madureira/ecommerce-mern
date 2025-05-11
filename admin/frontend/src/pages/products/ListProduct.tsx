@@ -9,7 +9,7 @@ export const ListProduct = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/products/");
+                const response = await axios.get("http://localhost:4000/api/products/");
                 console.log(response.data);
                 setList(response.data);
                 console.log('eu existo', response.data);
@@ -23,7 +23,7 @@ export const ListProduct = () => {
 
     const removeProduct = async (id: string) => {
         try {
-            await axios.delete(`http://localhost:3000/api/products/${id}`);
+            await axios.delete(`http://localhost:4000/api/products/${id}`);
             setList(prev => prev.filter(item => item._id !== id));
         } catch (error) {
             console.error("Erro ao remover produto:", error);

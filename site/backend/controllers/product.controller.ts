@@ -1,5 +1,7 @@
 import { Request, Response } from "express"
-import { createProduct, deleteProductById, getAllProducts } from "../services/product.service"
+import { createProduct, deleteProductById, getAllProducts, getProductById } from "../services/product.service"
+import { Product } from "../models/product.model";
+
 
 
 export const createProductHandler = async (req: Request, res: Response): Promise<void> => {
@@ -8,7 +10,7 @@ export const createProductHandler = async (req: Request, res: Response): Promise
 
         const images: Express.Multer.File[] = [];
 
-        // Pega os arquivos individualmente
+
         ['image1', 'image2', 'image3', 'image4'].forEach((field) => {
             if (filesObj[field] && filesObj[field][0]) {
                 images.push(filesObj[field][0]);
@@ -76,5 +78,28 @@ export const deleteProductByIdHandler = async (req: Request, res: Response) => {
 
     } catch (err) {
         res.status(500).json({ error: "Erro ao excluir produto" })
+    }
+}
+
+export const getProductByIdHandler = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params
+        const product = await getProductById(id)
+        res.status(200).json(product)
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar produtos" })
+    }
+}
+
+export const loadProducts = async (req: Request, res: Response) => {
+    try {
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const skip = (page - 1) * limit;
+
+        const products = await Product.find().skip(skip).limit(limit);
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao buscar produtos" });
     }
 }
