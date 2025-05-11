@@ -4,6 +4,8 @@ import axios from "axios"
 import { toast } from "react-toastify"
 import { CiDeliveryTruck } from "react-icons/ci";
 import { GiShoppingBag } from "react-icons/gi";
+import { useAppDispatch } from "../store/hooks";
+import { setUser } from "../store/slices/authSlice";
 
 interface LoginProps {
     setToken: (token: string) => void;
@@ -14,6 +16,7 @@ export const Login = ({ setToken }: LoginProps) => {
     const [password, setPassword] = useState("")
 
     const navigate = useNavigate()
+    const dispatch = useAppDispatch();
 
     const onSubmitHandler = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -22,6 +25,16 @@ export const Login = ({ setToken }: LoginProps) => {
             .then((response) => {
                 if (response.data.success) {
                     setToken(response.data.token)
+                    // Make sure response.data.user exists before accessing properties
+                    if (response.data.user && response.data.user.name) {
+                        dispatch(setUser({
+                            name: response.data.user.name,
+                            email: response.data.user.email || email
+                        }));
+                    } else {
+                        // Fallback if user object is incomplete
+                        dispatch(setUser({ name: "User", email }));
+                    }
                     toast.success("Fez login")
                     navigate("/")
                 } else {
@@ -32,7 +45,6 @@ export const Login = ({ setToken }: LoginProps) => {
                 toast.error(error.message)
             })
     }
-
 
     return (
         <section className="h-screen flex items-center justify-center bg-gradient-to-r from-emerald-100 to-teal-500">

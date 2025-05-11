@@ -1,7 +1,6 @@
 import { Cart } from '../models/cart.model'
 import { Product } from '../models/product.model'
-import { User } from '../models/user.model'
-import { Item } from '../models/cart.model'
+
 
 interface addCart {
     productId: string,
@@ -12,22 +11,22 @@ interface addCart {
 export const getCart = async (userId: string) => {
     const cart = await Cart.findOne({ userId }).populate({
         path: "items.productId",
-        select: "name images description price", // seleciona apenas esses campos
+        select: "name images description price",
     });
 
-    // Se não encontrar carrinho, retorne um objeto vazio estruturado
+
     if (!cart) {
         return { userId, items: [] };
     }
 
-    // Formatar os itens conforme esperado pelo frontend
+
     const formattedItems = cart.items.map(item => {
         const product = item.productId as any;
         return {
             product: {
                 _id: product._id,
                 name: product.name,
-                image: product.images?.[0] || "", // apenas a primeira imagem
+                image: product.images?.[0] || "",
                 description: product.description,
                 price: product.price
             },
@@ -45,7 +44,7 @@ export const getCart = async (userId: string) => {
 };
 
 export const addToCart = async (userId: string, item: addCart) => {
-    // Validação de entrada
+
     if (!userId || !item.productId || !item.quantity) {
         throw new Error('Dados inválidos para adicionar ao carrinho');
     }
@@ -61,12 +60,12 @@ export const addToCart = async (userId: string, item: addCart) => {
         cart = new Cart({ userId, items: [] });
     }
 
-    // Normaliza o ID do produto para string para garantir comparação consistente
+
     const productIdString = item.productId.toString();
 
     console.log("Buscando produto no carrinho:", productIdString, "tamanho:", item.size);
 
-    // Usando o método find para ser mais explícito e facilitar o debug
+
     const existingItem = cart.items.find(cartItem => {
         const cartItemIdString = cartItem.productId.toString();
         const sameProduct = cartItemIdString === productIdString;
@@ -98,9 +97,6 @@ export const addToCart = async (userId: string, item: addCart) => {
 }
 
 export const removeFromCart = async (userId: string, item: string) => {
-    // if (!userId || !item?.productId || !item?.size) {
-    //     throw new Error('Parâmetros inválidos para remoção do item do carrinho.');
-    // }
 
     const cart = await Cart.findOne({ userId });
 
@@ -108,11 +104,9 @@ export const removeFromCart = async (userId: string, item: string) => {
         throw new Error('Carrinho não encontrado.');
     }
 
-    // Encontra o índice do item a ser removido
+
     const itemIndex = cart.items.findIndex(
-        // cartItem =>
-        //     cartItem.productId.toString() === item.productId &&
-        //     cartItem.size === item.size
+
         cartItem => cartItem._id!.toString() === item
 
     );
@@ -123,15 +117,14 @@ export const removeFromCart = async (userId: string, item: string) => {
         throw new Error('Item não encontrado no carrinho.');
     }
 
-    // Remove o item do array
+
     cart.items.splice(itemIndex, 1);
 
     if (cart.items.length === 0) {
-        // Carrinho vazio: deletar o documento
+
         await Cart.deleteOne({ userId });
         console.log("Carrinho removido pois ficou vazio");
     } else {
-        // Ainda há itens: apenas salva, sem retornar
         await cart.save();
     }
 };

@@ -16,7 +16,7 @@ interface ICreateProductInput {
 export const createProduct = async (productInput: ICreateProductInput) => {
     const { images, ...productData } = productInput;
 
-    // Upload das imagens para o Cloudinary
+
     const uploadedImages: string[] = [];
 
     for (const image of images) {
@@ -27,7 +27,7 @@ export const createProduct = async (productInput: ICreateProductInput) => {
         uploadedImages.push(result.secure_url);
     }
 
-    // Criar e salvar o produto com as URLs das imagens
+
     const newProduct = new Product({
         ...productData,
         images: uploadedImages

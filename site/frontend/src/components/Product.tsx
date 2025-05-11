@@ -21,7 +21,7 @@ export const Product = ({ product }: ProductProps) => {
 
     return (
         <Link to={`/product/${product._id}`}>
-            <article className="flex flex-col justify-between bg-white  hover:border-teal-500 hover:border rounded-xl shadow-sm w-48 p-2 hover:shadow-md transition-shadow duration-300">
+            <article className="flex flex-col justify-between bg-white hover:border-teal-500 hover:border rounded-xl shadow-sm w-38 md:w-48 p-2 hover:shadow-md transition-shadow duration-300">
                 <img
                     src={currentImage}
                     alt={product.name}

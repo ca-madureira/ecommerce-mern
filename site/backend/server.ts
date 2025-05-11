@@ -7,6 +7,7 @@ import cartRouter from './routes/cart.route'
 import { categoryRouter } from './routes/category.route';
 import { productRouter } from './routes/product.route';
 import { v2 as cloudinary } from 'cloudinary';
+import orderRouter from './routes/order.route';
 
 dotenv.config()
 
@@ -27,6 +28,7 @@ app.use('/api/categories', categoryRouter);
 app.use('/api/products', productRouter)
 app.use("/api/user", userRouter)
 app.use("/api/shop/cart", cartRouter)
+app.use("/api/payments/orders", orderRouter)
 
 app.listen(port, () => console.log(`Servidor rodando ${port}`))
 

@@ -32,7 +32,7 @@ const initialState: CartState = {
     itemErrors: {},
 };
 
-// Fetch cart
+// Thunks
 export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWithValue }) => {
     try {
         const response = await API.get('/');
@@ -42,7 +42,6 @@ export const fetchCart = createAsyncThunk('cart/fetchCart', async (_, { rejectWi
     }
 });
 
-// Add item
 export const addItemToCart = createAsyncThunk(
     'cart/addItem',
     async ({ productId, quantity, size }: { productId: string; quantity: number; size?: string }, { rejectWithValue }) => {
@@ -55,12 +54,11 @@ export const addItemToCart = createAsyncThunk(
     }
 );
 
-// Remove item
 export const removeItemFromCart = createAsyncThunk(
     'cart/removeItem',
     async (itemId: string, { rejectWithValue }) => {
         try {
-            const response = await API.delete(`/${itemId}`);
+            await API.delete(`/${itemId}`);
             return { removedItemId: itemId };
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.error || err.message);
@@ -68,12 +66,11 @@ export const removeItemFromCart = createAsyncThunk(
     }
 );
 
-// Update quantity
 export const updateItemQuantity = createAsyncThunk(
     'cart/updateQuantity',
     async ({ idItem, operation }: { idItem: string; operation: 'increment' | 'decrement' }, { rejectWithValue }) => {
         try {
-            const response = await API.put(`/${idItem}`, { operation });
+            await API.put(`/${idItem}`, { operation });
             return { idItem, operation };
         } catch (err: any) {
             return rejectWithValue(err.response?.data?.error || err.message);
@@ -92,10 +89,7 @@ const cartSlice = createSlice({
             if (itemIndex !== -1) {
                 const item = state.cart[itemIndex];
                 let newQuantity = operation === 'increment' ? item.quantity + 1 : item.quantity - 1;
-
-                if (newQuantity < 1) {
-                    newQuantity = 1;
-                }
+                if (newQuantity < 1) newQuantity = 1;
 
                 state.cart[itemIndex] = {
                     ...item,
@@ -112,13 +106,12 @@ const cartSlice = createSlice({
         },
         clearItemError: (state, action: PayloadAction<string>) => {
             const idItem = action.payload;
-            const { [idItem]: _, ...rest } = state.itemErrors; // Remove a propriedade do erro
+            const { [idItem]: _, ...rest } = state.itemErrors;
             state.itemErrors = rest;
         },
     },
     extraReducers: (builder) => {
         builder
-            // FETCH
             .addCase(fetchCart.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -126,7 +119,6 @@ const cartSlice = createSlice({
             .addCase(fetchCart.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 const payload = action.payload;
-
                 if (payload && Array.isArray(payload.items)) {
                     state.cart = payload.items.map((item: any) => ({
                         product: item.productId,
@@ -143,7 +135,6 @@ const cartSlice = createSlice({
                 state.error = action.payload as string || 'Falha ao carregar carrinho';
             })
 
-            // ADD
             .addCase(addItemToCart.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -151,7 +142,6 @@ const cartSlice = createSlice({
             .addCase(addItemToCart.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 const payload = action.payload;
-
                 if (payload && Array.isArray(payload.items)) {
                     state.cart = payload.items.map((item: any) => ({
                         product: item.productId,
@@ -168,7 +158,6 @@ const cartSlice = createSlice({
                 state.error = action.payload as string || 'Falha ao adicionar item';
             })
 
-            // REMOVE
             .addCase(removeItemFromCart.pending, (state) => {
                 state.status = 'loading';
                 state.error = null;
@@ -182,14 +171,11 @@ const cartSlice = createSlice({
                 state.error = action.payload as string || 'Falha ao remover item';
             })
 
-            // UPDATE QUANTITY
             .addCase(updateItemQuantity.pending, (state, action) => {
                 state.updatingItemId = action.meta.arg.idItem;
-                state.itemErrors = { ...state.itemErrors }; // Preserva erros existentes
             })
-            .addCase(updateItemQuantity.fulfilled, (state, action) => {
+            .addCase(updateItemQuantity.fulfilled, (state) => {
                 state.updatingItemId = null;
-                state.itemErrors = { ...state.itemErrors }; // Mantém outros erros
             })
             .addCase(updateItemQuantity.rejected, (state, action) => {
                 state.updatingItemId = null;
@@ -200,7 +186,13 @@ const cartSlice = createSlice({
     }
 });
 
-export const { updateQuantityOptimistic, setItemUpdating, setItemError, clearItemError } = cartSlice.actions;
+// Actions
+export const {
+    updateQuantityOptimistic,
+    setItemUpdating,
+    setItemError,
+    clearItemError
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
 
@@ -208,14 +200,21 @@ export default cartSlice.reducer;
 export const selectCart = (state: { cart: CartState }) => state.cart.cart;
 export const selectCartStatus = (state: { cart: CartState }) => state.cart.status;
 export const selectCartError = (state: { cart: CartState }) => state.cart.error;
+export const selectUpdatingItemId = (state: { cart: CartState }) => state.cart.updatingItemId;
+export const selectItemErrors = (state: { cart: CartState }) => state.cart.itemErrors;
+
 export const selectCartItemCount = (state: { cart: CartState }) =>
     Array.isArray(state.cart.cart)
         ? state.cart.cart.reduce((total, item) => total + item.quantity, 0)
         : 0;
-export const selectUpdatingItemId = (state: { cart: CartState }) => state.cart.updatingItemId;
-export const selectItemErrors = (state: { cart: CartState }) => state.cart.itemErrors;
 
 export const selectCartItemById = (state: { cart: CartState }, idItem: string) => {
     const item = state.cart.cart.find(item => item.idItem === idItem);
     return item ? item.quantity : 0;
 };
+
+
+export const selectCartTotal = (state: { cart: CartState }) =>
+    Array.isArray(state.cart.cart)
+        ? state.cart.cart.reduce((total, item) => total + item.quantity * item.product.price, 0)
+        : 0;

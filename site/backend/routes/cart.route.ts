@@ -11,7 +11,7 @@ import { requireAuth } from '../middleware/auth.middleware'
 
 const cartRouter = express.Router()
 
-// Todas as rotas abaixo exigem autenticação
+
 cartRouter.use(requireAuth)
 
 cartRouter.post("/add", addToCartController)

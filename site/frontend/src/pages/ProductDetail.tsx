@@ -24,12 +24,12 @@ export const ProductDetail = () => {
     const [showSizeWarning, setShowSizeWarning] = useState(false);
     const [addingToCart, setAddingToCart] = useState(false);
 
-    // Carregar o carrinho quando o componente for montado
+
     useEffect(() => {
         dispatch(fetchCart());
     }, [dispatch]);
 
-    // Carregar o carrinho quando o componente for montado
+
     useEffect(() => {
         dispatch(fetchCart());
     }, [dispatch]);
@@ -87,22 +87,22 @@ export const ProductDetail = () => {
         try {
 
 
-            // 2. Sincronização com o backend
+
             await dispatch(addItemToCart({
                 productId: product._id,
                 quantity: 1,
                 size: sizeSelected
             })).unwrap();
 
-            // 3. Verificar se o item realmente foi adicionado
+
             await dispatch(fetchCart()).unwrap();
 
-            // 4. Feedback visual
+
             setLastAddedId(product._id);
             setShowModal(true);
         } catch (error) {
             console.error("Erro ao adicionar ao carrinho:", error);
-            // Aqui você poderia adicionar um toast de erro
+
         } finally {
             setAddingToCart(false);
         }
@@ -115,7 +115,7 @@ export const ProductDetail = () => {
     return (
         <>
             <section className="flex flex-col lg:flex-row lg:justify-between lg:items-start lg:max-w-7xl lg:mx-auto lg:px-4 lg:py-6 gap-4">
-                {/* Seção de imagens */}
+
                 <div className="flex ml-2 mt-2 lg:w-1/2">
                     <aside className="w-[18%] flex flex-col gap-3">
                         {product.images.map((img, index) => (
@@ -138,7 +138,7 @@ export const ProductDetail = () => {
                     </div>
                 </div>
 
-                {/* Seção de detalhes do produto */}
+
                 <div className="flex flex-col w-full lg:w-1/2 p-4 lg:p-6 space-y-4 lg:border-l lg:pl-8">
                     <div className="border-b pb-4">
                         <h1 className="text-2xl lg:text-3xl font-bold mb-2">{product.name}</h1>
@@ -200,7 +200,7 @@ export const ProductDetail = () => {
                 </div>
             </section>
 
-            {/* Modal de confirmação */}
+
             {showModal && (
                 <CartModal
                     visible={showModal}

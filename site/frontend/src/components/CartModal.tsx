@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import API from "../services/cartAPI";
-import { ProductType } from "../types";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
+import { ProductType } from "../types";
 
 interface CartModalProps {
     visible: boolean;
@@ -25,48 +26,49 @@ export const CartModal = ({ visible, onClose, productId }: CartModalProps) => {
     if (!visible) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 max-w-md w-full">
+        <section className="fixed inset-0 bg-gradient-to-r from-emerald-100 to-teal-500 flex items-center justify-center z-50">
+            <article className="bg-white rounded-lg p-6 max-w-md w-full">
                 {loading ? (
                     <p>Carregando...</p>
                 ) : (
                     <>
-                        <h2 className="text-xl font-bold mb-4">Produto adicionado ao carrinho!</h2>
+                        <h1 className="text-xl font-bold mb-4">Produto adicionado ao carrinho!</h1>
                         {product && (
-                            <div className="flex items-center gap-4 mb-6">
+                            <figure className="flex items-center gap-4 mb-6">
                                 <img
                                     src={product.images[0]}
                                     alt={product.name}
                                     className="w-20 h-20 object-cover rounded"
                                 />
-                                <div>
+                                <figcaption>
                                     <h3 className="font-medium">{product.name}</h3>
-                                    <p className="text-teal-600">
+                                    <p className="text-teal-700">
                                         R$ {product.price.toFixed(2).replace(".", ",")}
                                     </p>
-                                </div>
-                            </div>
+                                </figcaption>
+                            </figure>
                         )}
                         <div className="flex gap-3">
-                            <button
+                            <Link to="/"
                                 onClick={onClose}
-                                className="flex-1 py-2 border border-gray-300 rounded hover:bg-gray-50"
+                                className="flex-1 py-2 text-center border border-gray-300 rounded hover:bg-gray-50"
                             >
                                 Continuar Comprando
-                            </button>
-                            <button
+                            </Link>
+                            <Link
+                                to="/cart"
                                 onClick={() => {
                                     onClose();
-                                    window.location.href = "/cart";
+
                                 }}
-                                className="flex-1 py-2 bg-teal-600 text-white rounded hover:bg-teal-700"
+                                className="flex-1 py-2 text-center bg-teal-600 text-white font-medium rounded hover:bg-teal-700"
                             >
                                 Ver Carrinho
-                            </button>
+                            </Link>
                         </div>
                     </>
                 )}
-            </div>
-        </div>
+            </article>
+        </section>
     );
 };

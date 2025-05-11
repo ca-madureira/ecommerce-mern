@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { createProduct, deleteProductById, getAllProducts, getProductById } from "../services/product.service"
 import { Product } from "../models/product.model";
-import mongoose from 'mongoose';
+
 
 
 export const createProductHandler = async (req: Request, res: Response): Promise<void> => {
@@ -10,7 +10,7 @@ export const createProductHandler = async (req: Request, res: Response): Promise
 
         const images: Express.Multer.File[] = [];
 
-        // Pega os arquivos individualmente
+
         ['image1', 'image2', 'image3', 'image4'].forEach((field) => {
             if (filesObj[field] && filesObj[field][0]) {
                 images.push(filesObj[field][0]);
