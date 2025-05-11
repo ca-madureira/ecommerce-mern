@@ -17,12 +17,6 @@ Este é um projeto de e-commerce de roupas desenvolvido com foco em performance,
   - Express
   - Mongoose (MongoDB)
 
-- **Outros**:
-  - Stripe (para pagamento)
-  - REST API
-
----
-
 ## ⚙️ Funcionalidades
 
 ### 🛒 Usuário
@@ -38,16 +32,8 @@ Este é um projeto de e-commerce de roupas desenvolvido com foco em performance,
 
 ---
 
-## 💻 Como rodar o projeto localmente
-
-### Pré-requisitos
-- Node.js
-- MongoDB
 
 
-### Instalação
 
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/seu-usuario/seu-projeto.git
-   cd seu-projeto
+https://github.com/user-attachments/assets/13334c17-4509-400a-b20d-bc7d16f84f47
+
