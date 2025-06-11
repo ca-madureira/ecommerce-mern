@@ -50,10 +50,10 @@ export const Header = () => {
 
             <div className="flex items-center space-x-4">
                 {user && user.name ? (
-                    <span className="text-white font-semibold flex items-center space-x-1">
+                    <Link to="/address" className="text-white font-semibold flex items-center space-x-1">
                         <FaUser />
                         <span className="hidden md:inline">{user.name}</span>
-                    </span>
+                    </Link>
                 ) : (
                     <Link to="/login" className="flex items-center space-x-1 text-white font-semibold">
                         <span className="hidden md:inline">Entrar</span>
