@@ -23,6 +23,7 @@ Este é um projeto de e-commerce de roupas desenvolvido com foco em performance,
 - Navegar por roupas disponíveis.
 - Pesquisar e filtrar produtos por **categoria**.
 - Adicionar produtos ao **carrinho**.
+- Cadatrar **endereços** para entrega.
 - Finalizar compra e visualizar **pedidos**
 
 ### 📦 Admin/Dashboard
