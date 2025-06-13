@@ -23,6 +23,7 @@ export const login = async (req: Request, res: Response) => {
 
         if (isMatch) {
             const token = createToken(user?._id as Types.ObjectId);
+            console.log('retorno', user)
             res.json({ success: true, token, user });
         } else {
             res.json({ success: false, message: "Credenciais inválidas" });

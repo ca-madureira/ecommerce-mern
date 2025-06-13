@@ -1,6 +1,6 @@
 import mongoose, { Document, Model, Types } from 'mongoose'
 
-// Interface para um item do carrinho
+
 export interface CartItem {
     productId: string;
     quantity: number;
@@ -12,7 +12,7 @@ export interface IUser extends Document {
     name: string
     email: string
     password: string
-    cart: CartItem[]  // Array de itens do carrinho
+    cart: CartItem[]
 }
 
 export const userSchema = new mongoose.Schema<IUser>({
@@ -31,8 +31,8 @@ export const userSchema = new mongoose.Schema<IUser>({
         required: true,
     },
     cart: {
-        type: [Object],  // Array de objetos
-        default: []      // Valor padrão como array vazio
+        type: [Object],
+        default: []
     }
 }, {
     minimize: false,

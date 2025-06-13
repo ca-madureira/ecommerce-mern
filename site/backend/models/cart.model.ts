@@ -4,7 +4,7 @@ export interface Item {
     productId: mongoose.Schema.Types.ObjectId | string;
     quantity: number;
     size: string;
-    _id?: mongoose.Schema.Types.ObjectId;  // _id agora é obrigatório
+    _id?: mongoose.Schema.Types.ObjectId;
 }
 
 export interface ICart {

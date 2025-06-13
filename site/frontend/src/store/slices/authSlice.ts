@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 interface User {
+  _id: string
   name: string
   email: string
 }
@@ -9,7 +10,6 @@ interface AuthState {
   user: User | null
   token: string | null
 }
-
 
 const savedUser = localStorage.getItem("user")
 const savedToken = localStorage.getItem("token")

@@ -1,14 +1,14 @@
 import { Schema, model, Document, Types } from "mongoose";
 
 interface OrderItem {
-    product: Types.ObjectId; // Corrigido
+    product: Types.ObjectId;
     quantity: number;
     size?: string;
 }
 
 export interface IOrder extends Document {
     orderNumber: string;
-    userId: Types.ObjectId; // Corrigido
+    userId: Types.ObjectId;
     items: OrderItem[];
     shippingAddress: {
         street: string;

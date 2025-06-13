@@ -9,6 +9,7 @@ import { productRouter } from './routes/product.route';
 import { v2 as cloudinary } from 'cloudinary';
 import orderRouter from './routes/order.route';
 import addressRouter from './routes/address.route';
+import reviewRouter from './routes/review.route'
 
 dotenv.config()
 
@@ -31,6 +32,7 @@ app.use("/api/user", userRouter)
 app.use("/api/shop/cart", cartRouter)
 app.use("/api/payments/orders", orderRouter)
 app.use("/api/user/address", addressRouter);
+app.use("/api/reviews", reviewRouter)
 
 app.listen(port, () => console.log(`Servidor rodando ${port}`))
 

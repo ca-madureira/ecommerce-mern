@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { addItemToCart, fetchCart } from "../store/slices/cartSlice";
 import { CartModal } from "../components/CartModal";
 import axios from "axios";
+import { Review } from "../components/Review";
 
 export const ProductDetail = () => {
     const dispatch = useAppDispatch();
@@ -211,6 +212,7 @@ export const ProductDetail = () => {
                     productId={lastAddedId}
                 />
             )}
+            <Review />
         </>
     );
 };

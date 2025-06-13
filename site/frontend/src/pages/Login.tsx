@@ -28,6 +28,7 @@ export const Login = ({ setAppToken }: LoginProps) => {
                     const user = {
                         name: response.data.user.name,
                         email: response.data.user.email,
+                        _id: response.data.user._id
                     };
 
                     dispatch(setUser(user));
