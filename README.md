@@ -22,7 +22,7 @@ Este é um projeto de e-commerce de roupas desenvolvido com foco em performance,
 ### 🛒 Usuário
 - Navegar por roupas disponíveis.
 - Pesquisar e filtrar produtos por **categoria**.
-- Avaliar **produto**, inserindo comentário e nota de 0 a 5.
+- Avaliar **produto**, inserindo comentário e nota de 1 a 5.
 - Adicionar produtos ao **carrinho**.
 - Cadatrar **endereços** para entrega.
 - Finalizar compra e visualizar **pedidos**
